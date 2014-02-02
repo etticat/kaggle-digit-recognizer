@@ -1,25 +1,25 @@
-function [J grad] = nnCostFunction(nn_params, ...
+function [J grad] = nnCostFunction(params, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
                                    num_labels, ...
                                    X, y, lambda)
 %NNCOSTFUNCTION Implements the neural network cost function for a two layer
 %neural network which performs classification
-%   [J grad] = NNCOSTFUNCTON(nn_params, hidden_layer_size, num_labels, ...
+%   [J grad] = NNCOSTFUNCTON(params, hidden_layer_size, num_labels, ...
 %   X, y, lambda) computes the cost and gradient of the neural network. The
 %   parameters for the neural network are "unrolled" into the vector
-%   nn_params and need to be converted back into the weight matrices. 
+%   params and need to be converted back into the weight matrices. 
 % 
 %   The returned parameter grad should be a "unrolled" vector of the
 %   partial derivatives of the neural network.
 %
 
-% Reshape nn_params back into the parameters Theta1 and Theta2, the weight matrices
+% Reshape params back into the parameters Theta1 and Theta2, the weight matrices
 % for our 2 layer neural network
-Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
+Theta1 = reshape(params(1:hidden_layer_size * (input_layer_size + 1)), ...
                  hidden_layer_size, (input_layer_size + 1));
 
-Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
+Theta2 = reshape(params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
 
 % Setup some useful variables
@@ -78,7 +78,7 @@ a1 = X;
 						% Theta1 is a 25x401 MAtrix Because our 2. layer (the only hidden layer) has 25 units and receives Data from the input layer (400 units + bias unit). It contains the weights of the hidden layer.
 z2 = a1 * Theta1';		% z2 now contains a 5000x25 matrix containing the Values of the 	
 						% hidden layer.
-a2 = nn_sigmoid(z2);		% a2 now contains the normalized Values of the hidden layer (z2)
+a2 = sigmoid(z2);		% a2 now contains the normalized Values of the hidden layer (z2)
 						% this matrix has the same size as z2 but contains values from 0 to 1 depending on the size of the actual value in z2. Example z2(10) => a2(1) or z2(4) => a2(0.73)
  
 n = size(a2, 1);		% n=5000 number of examples each unit contains
@@ -88,7 +88,7 @@ a2 = [ones(n,1) a2];	% Adds a column of 5000 ones to a2 making it a matrix with 
 						
 z3 = a2 * Theta2';		% z2 now contains a 5000x10 matrix containing the Values of the 	
 						% hidden layer.
-a3 = nn_sigmoid(z3);		% normalized version of z3
+a3 = sigmoid(z3);		% normalized version of z3
   
 J = ((1/m) * sum(sum((-y .* log(a3))-((1-y) .* log(1-a3))))); % assume a3 = hthetha(x)k
 
@@ -107,7 +107,7 @@ delta_3 = a3 - y;		% y indicates if the training example belongs to the current 
 
 
 %Step 3:
-delta_2 = (delta_3 * Theta2(:,2:end)) .* nn_sigmoidGradient(z2);
+delta_2 = (delta_3 * Theta2(:,2:end)) .* sigmoidGradient(z2);
 						% NOTE: We do not want to use the bias unit of Theta2
  
 
