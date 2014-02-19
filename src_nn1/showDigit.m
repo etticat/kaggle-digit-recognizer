@@ -1,6 +1,6 @@
 function showDigit(digit)
 
--imagesc(squeeze(digit), [0 255]); 
+-imagesc(squeeze(digit), [0 1]); 
 -colormap(gray);
 
 end

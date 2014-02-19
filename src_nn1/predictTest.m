@@ -5,7 +5,7 @@
 load('tmp/weights.mat');
 load('tmp/converted.mat');
 
-p = predict(Theta1, Theta2, X_test)-1;
+p = predict(Theta1, Theta2, X_validation)-1;
 
 
 load('tmp/data.mat');

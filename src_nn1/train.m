@@ -1,13 +1,10 @@
 
-clear ;
+%clear ;
 load('tmp/converted.mat');
 
 %% Setup the parameters you will use for this exercise
-hidden_layer_size = 200;   % 25 hidden units
 num_labels = 10;          % 10 labels, from 1 to 10   
                           % (note that we have mapped "0" to label 10)
-max_iterations = 2000;
-lambda = 1;
 
 initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
 initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
@@ -15,10 +12,14 @@ initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 % Unroll parameters
 initial_params = [initial_Theta1(:) ; initial_Theta2(:)];
                           
-fprintf('Reading data ...\n')
+%fprintf('Reading data ...\n')
 
+clear options;
+clear costFunction;
+clear cost;
+clear params;
 
-fprintf('\nTraining Neural Network... \n')
+%fprintf('\nTraining Neural Network... \n')
 
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
