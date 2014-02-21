@@ -11,13 +11,16 @@ max_iterationsTrys = [5 10 20 50 100 500 1000];
 imageRescalingTrys = [0 1]; % If image rescaling should be done => 1 or 0 if yes or no
 capTrys = [0 100 128 160 200]; % If image intensity should be caped
 
-max_iterations 
-hidden_layer_size 
-lambda 
-imageRescaling 
-cap 
-
-
-parseFeatures;
-train;
-predictTrain;
+for  max_iterations = max_iterationsTrys
+    for hidden_layer_size = hidden_layer_sizeTrys
+        for lambda = lambdaTrys
+            for imageRescaling = imageRescalingTrys
+                for cap = capTrys
+                    parseFeatures;
+                    train;
+                    predictTrain;
+                end
+            end
+        end
+    end
+end

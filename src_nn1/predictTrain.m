@@ -12,3 +12,6 @@ p2 = predict(Theta1, Theta2, X_test);
 fid = fopen('result.csv', 'a+');
 fprintf(fid, '\n%f,%f,%f,%f,%f,%f,%f,%f\n',mean(double(p == y_train)) * 100,  mean(double(p2 == y_test)) * 100, lambda, hidden_layer_size, max_iterations, imageRescaling, cap);
 fclose(fid);
+
+fprintf('\n%f,%f,%f,%f,%f,%f,%f,%f\n',mean(double(p == y_train)) * 100,  mean(double(p2 == y_test)) * 100, lambda, hidden_layer_size, max_iterations, imageRescaling, cap);
+
