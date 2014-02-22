@@ -43,7 +43,6 @@ convertData;
 
 % TODO clean images here
 
-
 % rescaling images
 if(imageRescaling  == 1)
     imagesTrain= rescaleImage(imagesTrain);
