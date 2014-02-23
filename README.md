@@ -17,3 +17,9 @@ hidden layers: 2 (including output layer)<br>
 hidden layer size = 200<br>
 training set accuracy: 98.259524%<br>
 test set accuracy: 0.9451%<br>
+
+### Neural network - neural network toolbox ###
+
+iterations: ~ 100
+hidden layer sizes: 50 30 20
+test set accuracy: 97,657%
