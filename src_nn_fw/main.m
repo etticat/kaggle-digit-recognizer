@@ -1,51 +1,37 @@
-clc;
-clear;
+%clc;
+%clear;
+tic;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CONFIG %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%different lables 0-9 => 10
-num_labels = 10;
 
-% 1 if images should be scaled to the maximum size
-imageRescaling = 0; 
+%config;
 
-% If and at which pint the intensity should be capped
-% 0: for no capping (Normal values from 0 to 255
-% 1-255: all values below the value will get 0 and the ones above get 1
-cap  = 0;
-
-% If we are currently doing a submission or if we just test on our training
-% set
-submission = false;
-
-% name of Algorith (For logging in csv)
-netName = 'pattern_50_20';
-
-%network settings
-net = patternnet([50 20]);
-
-% uncomment this for disabling test and validation sets (for submissions)
-if(submission)
-    net.divideParam.trainRatio = 100/100;
-    net.divideParam.valRatio = 0/100;
-    net.divideParam.testRatio = 0/100;
-end
+fprintf('Config finished at time %f\n' , toc); tic;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% DATA PARSING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %converts the provided csv and saves it into mat files which are easier to
 %read by matlab
-convertData;
+%convertData;
+
+fprintf('Parsing finished at time %f \n' , toc);tic;
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%% FEATURE ENHANCING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% TODO clean images here
+load('tmp/data.mat');
 
 % rescaling images
-if(imageRescaling  == 1)
-    imagesTrain= rescaleImage(imagesTrain);
+if(imageRescaling)
+    imagesTrain = rescaleImage(imagesTrain);
+end
+
+if(imageCleaning)
+    for i=1: size(imagesTrain,3)
+        imagesTrain(:,:,i) = medfilt2(imagesTrain(:,:,i));
+    end
 end
 
 % capping images 
@@ -54,17 +40,19 @@ if(cap ~= 0)
 end
 
 
+fprintf('Feature enhancing finished at time %f\n' , toc);tic;
 %%%%%%%%%%%%%%%%%%%%%%%% FEATURE SIZE CONVERSION %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % converts the provided Data into a usable 42000x768 matrix
 parseFeatures;
 
+fprintf('Feature size conversion finished at time %f\n' , toc);tic;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TRAINING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %training neural network
 train;
 
+fprintf('Training finished at time %f\n' , toc);tic;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% VALIDATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if(~submission)
@@ -75,3 +63,6 @@ else
     %predict validation Values for submissions
     predictValidation;
 end
+
+
+fprintf('Validation finished at time %f\n' , toc);
